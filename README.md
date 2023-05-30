@@ -1,2 +1,2 @@
-# DigitalDesignHTML
-Задания по блоку HTML
+# Digital Design HTML
+Задания по блоку Основы веб-разработки
