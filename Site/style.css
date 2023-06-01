@@ -42,6 +42,10 @@
   padding: 0 10px;
 }
 
+.content .row{
+  flex-direction: column;
+}
+
 .column {
   margin: 5px;
   flex: 1;
