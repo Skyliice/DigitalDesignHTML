@@ -59,7 +59,17 @@
             <p>
                 Вы можете пройти опрос: <button id="myBtn">Пройти опрос</button>
             </p>
-
+        </div>
+    </div>
+    <div class="content">
+        <div class="column columncontent" style="width: 1000px;">
+            <h2>Получить рандомную аниме картинку:</h2>
+            <div style="position: relative; width: fit-content; text-align: center; margin: auto;">
+                <img id="imgAnime" src="default.png" alt="Image" style="max-width: 900px; height: 700px;" onerror="this.src='default.png'"/>
+                <p >Нажмите сюда, чтобы получить новую картинку: </p>
+                <button id="getImageBtn" style="padding: 5px; position: relative; margin-bottom: 5px;">Нажми меня</button>
+            </div>
+            
         </div>
     </div>
     <div id="myModal" class="modal">
@@ -86,6 +96,7 @@
         </div>
     </div>
     <script>
+        // Всплывающее окно
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("myBtn");
         var closeBtn = document.getElementById("myCloseBtn");
@@ -103,6 +114,16 @@
             if (event.target == modal) {
                 modal.style.display = "none";
             }
+        }
+
+        // Вызов GET запроса
+        var url = "https://api.waifu.pics/sfw/dance";
+        var myBtn = document.getElementById("getImageBtn");
+        var img = document.getElementById("imgAnime");
+        myBtn.onclick = async function (){
+            await fetch(url)
+            .then(response => response.json())
+            .then(data => img.src=data.url)
         }
     </script>
     <footer>
