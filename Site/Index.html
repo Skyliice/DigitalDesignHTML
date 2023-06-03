@@ -9,7 +9,6 @@
 </head>
 
 <body>
-
     <div class="background"></div>
     <div class="header">
         <h1 class="headerContent">One Piece</h1>
@@ -18,7 +17,7 @@
         <div class="column columnimg">
             <img src="Poster.jpg" alt="One Piece poster" />
         </div>
-        <div class="column columncontent">
+        <div class="column columncontent" id="someId">
             <h2>One Piece</h2>
             <p>One Piece (яп. ワンピース ван пи:су, «Ван-Пис») — сёнэн-манга за авторством Эйитиро Оды,
                 выходящая с 19 июля 1997 года по настоящее время в журнале Weekly Shonen Jump. Объединена в 103
@@ -65,36 +64,74 @@
         <div class="column columncontent" style="width: 1000px;">
             <h2>Получить рандомную аниме картинку:</h2>
             <div style="position: relative; width: fit-content; text-align: center; margin: auto;">
-                <img id="imgAnime" src="default.png" alt="Image" style="max-width: 900px; height: 700px;" onerror="this.src='default.png'"/>
-                <p >Нажмите сюда, чтобы получить новую картинку: </p>
-                <button id="getImageBtn" style="padding: 5px; position: relative; margin-bottom: 5px;">Нажми меня</button>
+                <img id="imgAnime" src="default.png" alt="Image" style="max-width: 900px; height: 700px;"
+                    onerror="this.src='default.png'" />
+                <p>Нажмите сюда, чтобы получить новую картинку: </p>
+                <button id="getImageBtn" style="padding: 5px; position: relative; margin-bottom: 5px;">Нажми
+                    меня</button>
             </div>
-            
+
         </div>
     </div>
     <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h3>Опрос</h3>
-            Ваше имя:<br />
-            <input type="text" />
-            <br />Ваш адрес электронной почты:<br />
-            <input type="email" />
-            <br />Смотрели ли вы One Piece?<br />
-            <input type="radio" name="group1" /> Да.<br />
-            <input type="radio" name="group1" /> Нет.<br />
-            <input type="radio" name="group1" /> Смотрю сейчас.<br />
-            <input type="radio" name="group1" /> Планирую посмотреть.<br />
-            <br />
-            Выберите аниме которые вы смотрели помимо One Piece.
-            <br /> <input type="checkbox" /> Наруто <br />
-            <input type="checkbox" /> Блич <br />
-            <input type="checkbox" /> Hunter x Hunter <br />
-            <input type="checkbox" /> Monogatari Series <br />
-            <br />
-            <button id="myCloseBtn">Отправить</button>
+        <div class="modal-content" id="form-content">
+            <!-- Модальное окно с опросом -->
         </div>
     </div>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.min.js"></script>
+    <script type="text/babel">
+        let currentName = "";
+        const radioButtons = ["Да", "Нет", "Смотрю сейчас", "Планирую посмотреть"];
+        const checkBoxes = ["Наруто", "Блич", "Hunter x Hunter", "Monogatari Series"];
+        const groupButtonItems = radioButtons.map((elementName) => <div>
+            <input type="radio" name="group1" />{elementName}<br />
+        </div>
+        );
+        const checkBoxItems = checkBoxes.map((elementName) =>
+            <div>
+                <input type="checkbox" /> {elementName} <br />
+            </div>
+        );
+        class FormComponent extends React.Component {
+            constructor(props) {
+                super(props);
+                this.state = { value: '' };
+
+                this.handleChange = this.handleChange.bind(this);
+                this.handleSubmit = this.handleSubmit.bind(this);
+            }
+
+            handleChange(event) {
+                this.setState({ value: event.target.value });
+            }
+
+            handleSubmit(event) {
+                alert('Отправленное имя: ' + this.state.value);
+                event.preventDefault();
+            }
+            render() {
+                return (<form onSubmit={this.handleSubmit}>
+                    <span class="close">&times;</span>
+                    <h3>Опрос</h3>
+                    Ваше имя:<br />
+                    <input type="text" value={this.state.value} onChange={this.handleChange}/>
+                    <br />Ваш адрес электронной почты:<br />
+                    <input type="email" />
+                    <br />Смотрели ли вы One Piece?<br />
+                    {groupButtonItems}
+                    <br />
+                    Выберите аниме которые вы смотрели помимо One Piece.
+                    <br />
+                    {checkBoxItems}
+                    <br />
+                    <input type="submit" value="Отправить" />
+                </form>);
+            }
+        }
+        ReactDOM.render(<FormComponent />, document.getElementById("form-content"));
+    </script>
     <script>
         // Всплывающее окно
         var modal = document.getElementById("myModal");
@@ -120,11 +157,11 @@
         var url = "https://api.waifu.pics/sfw/dance";
         var myBtn = document.getElementById("getImageBtn");
         var img = document.getElementById("imgAnime");
-        myBtn.onclick = async function (){
+        myBtn.onclick = async function () {
             var response = await fetch(url);
             var imgInfo = await response.json();
-            img.src=imgInfo.url;
-            };
+            img.src = imgInfo.url;
+        };
     </script>
     <footer>
         <p>Страница сделана Богданом Метелицей.</p>
