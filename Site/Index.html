@@ -94,6 +94,8 @@
                 <input type="checkbox" /> {elementName} <br />
             </div>
         );
+
+        var modal = document.getElementById("myModal");
         class FormComponent extends React.Component {
             constructor(props) {
                 super(props);
@@ -111,9 +113,15 @@
                 alert('Отправленное имя: ' + this.state.value);
                 event.preventDefault();
             }
+
+            clickExit(event)
+            {
+                modal.style.display ="none";
+            }
+
             render() {
                 return (<form onSubmit={this.handleSubmit}>
-                    <span class="close">&times;</span>
+                    <span class="close" onClick={this.clickExit}>&times;</span>
                     <h3>Опрос</h3>
                     Ваше имя:<br />
                     <input type="text" value={this.state.value} onChange={this.handleChange}/>
@@ -137,7 +145,7 @@
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("myBtn");
         var closeBtn = document.getElementById("myCloseBtn");
-        var span = document.getElementsByClassName("close")[0];
+        
         btn.onclick = function () {
             modal.style.display = "block";
         }
