@@ -83,26 +83,45 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.min.js"></script>
     <script type="text/babel">
         let currentName = "";
+        let currentRButton = "";
+        let checked = [];
         const radioButtons = [{ id: "1", option: "Да" }, { id: "2", option: "Нет" }, { id: "3", option: "Смотрю сейчас" }, { id: "4", option: "Планирую посмотреть" }];
         const checkBoxes = [{ id: "1", option: "Наруто" }, { id: "2", option: "Bleach" }, { id: "3", option: "Hunter x Hunter" }, { id: "4", option: "Monogatari Series" }];
 
+        const handleRButtonChange = (event) => {
+            currentRButton = event.target.value;
+        }
+
+        const handleCheck = (event) => {
+            var updatedList = [...checked];
+            if (event.target.checked) {
+                updatedList = [...checked, event.target.value];
+            } else {
+                updatedList.splice(checked.indexOf(event.target.value), 1);
+            }
+            checked=updatedList;
+        };
+
         function ListGroupButtonItems(props) {
             const list = props.names.map(elementName =>
-                    <li key={elementName.id}>
-                        <input type="radio" name="group1" />
-                        {elementName.option}
-                    </li>);
+                <li key={elementName.id}>
+                    <input type="radio" name="group1" value={elementName.option} onChange={handleRButtonChange} />
+                    {elementName.option}
+                </li>);
             return (<ul>{list}</ul>);
         }
 
         function ListCheckBoxItems(props) {
             const list = props.names.map(elementName =>
-                    <li key={elementName.id}>
-                        <input type="checkbox" />
-                        {elementName.option}
-                    </li>);
+                <li key={elementName.id}>
+                    <input type="checkbox" value={elementName.option} onChange={handleCheck} />
+                    {elementName.option}
+                </li>);
             return (<ul>{list}</ul>);
         }
+
+
+
         var modal = document.getElementById("myModal");
         class FormComponent extends React.Component {
             constructor(props) {
@@ -118,7 +137,10 @@
             }
 
             handleSubmit(event) {
-                alert('Отправленное имя: ' + this.state.value);
+
+                alert('Отправленное имя: ' + this.state.value + 
+                '\nВыбранная радиокнопка: ' + currentRButton +
+                '\nВыбранные чекбоксы: ' + checked);
                 event.preventDefault();
             }
 
