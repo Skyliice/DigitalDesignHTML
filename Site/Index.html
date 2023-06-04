@@ -83,18 +83,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.min.js"></script>
     <script type="text/babel">
         let currentName = "";
-        const radioButtons = ["Да", "Нет", "Смотрю сейчас", "Планирую посмотреть"];
-        const checkBoxes = ["Наруто", "Блич", "Hunter x Hunter", "Monogatari Series"];
+        const radioButtons = [{id:"1",option:"Да"},{id:"2", option:"Нет"} , {id:"3",option:"Смотрю сейчас"}, {id:"4",option:"Планирую посмотреть"}];
+        const checkBoxes = [{id:"1", option:"Наруто"},{id:"2", option:"Bleach"},{id:"3", option:"Hunter x Hunter"},{id:"4", option:"Monogatari Series"}];
 
         function ListGroupButtonItems(props) {
             return (<div>
-                {props.names.map(elementName => <div><input type="radio" key={elementName} name="group1" />{elementName}</div>)}
+                {props.names.map(elementName => <div><input type="radio" key={elementName.id} name="group1" />{elementName.option}</div>)}
             </div>)
         }
 
         function ListCheckBoxItems(props) {
             return (<div>
-                {props.names.map(elementName => <div><input type="checkbox" key={elementName} /> {elementName} <br />
+                {props.names.map(elementName => <div><input type="checkbox" key={elementName.id} /> {elementName.option} <br />
                 </div>)}
             </div>);
         }
