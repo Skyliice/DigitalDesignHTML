@@ -85,16 +85,19 @@
         let currentName = "";
         const radioButtons = ["Да", "Нет", "Смотрю сейчас", "Планирую посмотреть"];
         const checkBoxes = ["Наруто", "Блич", "Hunter x Hunter", "Monogatari Series"];
-        const groupButtonItems = radioButtons.map((elementName) => <div>
-            <input type="radio" name="group1" />{elementName}<br />
-        </div>
-        );
-        const checkBoxItems = checkBoxes.map((elementName) =>
-            <div>
-                <input type="checkbox" /> {elementName} <br />
-            </div>
-        );
 
+        function ListGroupButtonItems(props) {
+            return (<div>
+                {props.names.map(elementName => <div><input type="radio" key={elementName} name="group1" />{elementName}</div>)}
+            </div>)
+        }
+
+        function ListCheckBoxItems(props) {
+            return (<div>
+                {props.names.map(elementName => <div><input type="checkbox" key={elementName} /> {elementName} <br />
+                </div>)}
+            </div>);
+        }
         var modal = document.getElementById("myModal");
         class FormComponent extends React.Component {
             constructor(props) {
@@ -114,9 +117,8 @@
                 event.preventDefault();
             }
 
-            clickExit(event)
-            {
-                modal.style.display ="none";
+            clickExit(event) {
+                modal.style.display = "none";
             }
 
             render() {
@@ -124,15 +126,15 @@
                     <span class="close" onClick={this.clickExit}>&times;</span>
                     <h3>Опрос</h3>
                     Ваше имя:<br />
-                    <input type="text" value={this.state.value} onChange={this.handleChange}/>
+                    <input type="text" value={this.state.value} onChange={this.handleChange} />
                     <br />Ваш адрес электронной почты:<br />
                     <input type="email" />
                     <br />Смотрели ли вы One Piece?<br />
-                    {groupButtonItems}
+                    <ListGroupButtonItems names={radioButtons} />
                     <br />
                     Выберите аниме которые вы смотрели помимо One Piece.
                     <br />
-                    {checkBoxItems}
+                    <ListCheckBoxItems names={checkBoxes} />
                     <br />
                     <input type="submit" value="Отправить" />
                 </form>);
@@ -144,23 +146,15 @@
         // Всплывающее окно
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("myBtn");
-        var closeBtn = document.getElementById("myCloseBtn");
-        
+
         btn.onclick = function () {
             modal.style.display = "block";
-        }
-        closeBtn.onclick = function () {
-            modal.style.display = "none";
-        }
-        span.onclick = function () {
-            modal.style.display = "none";
         }
         window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
         }
-
         // Вызов GET запроса
         var url = "https://api.waifu.pics/sfw/dance";
         var myBtn = document.getElementById("getImageBtn");
