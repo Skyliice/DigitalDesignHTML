@@ -12,6 +12,11 @@
   z-index: 1;
 }
 
+ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
 .header {
   top: 0;
   background: rgba(0, 0, 0, 0.5);
